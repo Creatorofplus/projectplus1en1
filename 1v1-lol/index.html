@@ -2,53 +2,57 @@
 <html>
 <head>
     <style>
-    h3 {
-    	font-size: 20px;
-        font-family: Arial;
-    }
+        /* Reset margin and padding to ensure full page usage */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%; /* Ensure the html and body take up the full height */
+            width: 100%;  /* Ensure the html and body take up the full width */
+            overflow: hidden; /* Prevent scrollbars */
+        }
+
+        /* The game container should take up the full viewport */
+        .webgl-content {
+            width: 100%; /* Full width */
+            height: 100vh; /* Full height of the viewport */
+            position: relative;
+        }
+
+        /* Make sure the Unity game container fills the space */
+        #gameContainer {
+            width: 100%;
+            height: 100%;
+            display: block; /* Remove any unwanted space */
+        }
     </style>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3798877607103818" crossorigin="anonymous"></script>
+    
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3798877607103818" crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="webgl-content">
-        <div id="gameContainer" style="width: 100%; height: 95%; margin: auto;"></div>
-        <div class="footer">
-            <div class="webgl-logo"></div>
-            <div class="fullscreen" onclick="gameInstance.SetFullscreen(1)"></div>
-            <div class="title">1v1.LOL Unblocked</div>
-        </div>
+        <div id="gameContainer"></div> <!-- Game container now takes full space -->
     </div>
-		<script>
-       if (typeof getAdinDomain !== 'undefined') {
-           const bodyTag = document.getElementsByTagName('body')[0];
 
-           let addAdinPreroll = document.createElement('script');
-            addAdinPreroll.src = getAdinDomain;
-            bodyTag.appendChild(addAdinPreroll);
-        }
-  </script>
-<h3><a href="../index.html">Sten Unblocked</a></h3>
-<h3><a id="likes" href="#" onclick="like()">Loading likes...</a></h3>
-
-<script>
-var game = "/1v1-lol/";
-</script>
-<script src="../stenunblockedmain.js"></script>
-
-
-    <script src="firebasestuff.js"></script>
-
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MY0THGFRYS"></script>
-    <link rel="icon" href="../stennerela.jpg">
-    <meta charset="utf-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>1v1.LOL - Sten Unblocked</title>
-    <link rel="stylesheet" href="../slope/style/style.css">
-    <script src="../slope/UnityProgress.js"></script>
-    <script src="UnityLoader.js"></script>
     <script>
-      var gameInstance = UnityLoader.instantiate("gameContainer", "game.json", {onProgress: UnityProgress,Module:{onRuntimeInitialized: function() {UnityProgress(gameInstance, "complete")}}});
+        // Make sure to set the game instance after the DOM is ready
+        var game = "/1v1-lol/";
+
+        // Game initialization
+        var gameInstance = UnityLoader.instantiate("gameContainer", "game.json", {
+            onProgress: UnityProgress,
+            Module: {
+                onRuntimeInitialized: function() {
+                    UnityProgress(gameInstance, "complete");
+                }
+            }
+        });
     </script>
 
-</body>
-</html>
+    <script src="firebasestuff.js"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MY0THGFRYS"></script>
+    <link rel="icon" href="../stennerela.jpg">
+    <met

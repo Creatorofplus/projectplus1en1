@@ -35,6 +35,12 @@
             addAdinPreroll.src = getAdinDomain;
             bodyTag.appendChild(addAdinPreroll);
         }
+	const canvas = document.getElementById('webgl-canvas');
+    const gl = canvas.getContext('webgl');
+
+    if (!gl) {
+      alert("WebGL not supported!");
+    }
 	function resizeCanvas() {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;

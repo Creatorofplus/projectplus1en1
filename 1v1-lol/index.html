@@ -35,6 +35,21 @@
             addAdinPreroll.src = getAdinDomain;
             bodyTag.appendChild(addAdinPreroll);
         }
+	function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      gl.viewport(0, 0, canvas.width, canvas.height);
+    }
+
+    // Resize canvas initially and when window resizes
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();  // Set initial size
+
+    // Listen for fullscreen changes and adjust canvas size
+    document.addEventListener('fullscreenchange', resizeCanvas);
+    document.addEventListener('webkitfullscreenchange', resizeCanvas); // For Safari
+    document.addEventListener('mozfullscreenchange', resizeCanvas); // For Firefox
+    document.addEventListener('msfullscreenchange', resizeCanvas); // For IE/Edge
   </script>
 <script>
 var game = "/1v1-lol/";

@@ -2,75 +2,104 @@
 <html>
 <head>
     <style>
-    h3 {
-    	font-size: 20px;
-        font-family: Arial;
-    }
+        h3 {
+            font-size: 20px;
+            font-family: Arial;
+        }
     </style>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3798877607103818" crossorigin="anonymous"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3798877607103818" crossorigin="anonymous"></script>
 </head>
 <body>
     <style>
-    /* Add CSS to make the canvas fill the entire viewport */
-    body, html {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      overflow: hidden;
-    }
+        /* Add CSS to make the canvas fill the entire viewport */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
 
-    canvas {
-      display: block;
-      width: 100%;
-      height: 100%;
-    }
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
     </style>
 
     <div class="webgl-content">
-        <!-- This div will contain the WebGL canvas, if needed -->
         <div id="gameContainer" style="width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden;">
-            <!-- Add the WebGL canvas here -->
+            <!-- WebGL Canvas -->
             <canvas id="webgl-canvas"></canvas>
         </div>
     </div>
 
     <script>
-    if (typeof getAdinDomain !== 'undefined') {
-        const bodyTag = document.getElementsByTagName('body')[0];
+        if (typeof getAdinDomain !== 'undefined') {
+            const bodyTag = document.getElementsByTagName('body')[0];
+            let addAdinPreroll = document.createElement('script');
+            addAdinPreroll.src = getAdinDomain;
+            bodyTag.appendChild(addAdinPreroll);
+        }
 
-        let addAdinPreroll = document.createElement('script');
-        addAdinPreroll.src = getAdinDomain;
-        bodyTag.appendChild(addAdinPreroll);
-    }
+        // Get the canvas element
+        const canvas = document.getElementById('webgl-canvas');
+        const gl = canvas.getContext('webgl');
 
-    // Get the canvas element
-    const canvas = document.getElementById('webgl-canvas');
-    const gl = canvas.getContext('webgl');
+        if (!gl) {
+            alert("WebGL not supported!");
+        }
 
-    if (!gl) {
-        alert("WebGL not supported!");
-    }
+        // Function to resize canvas
+        function resizeCanvas() {
+            // Set canvas width and height to match the window dimensions
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            gl.viewport(0, 0, canvas.width, canvas.height);
+        }
 
-    // Function to resize the canvas
-    function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        gl.viewport(0, 0, canvas.width, canvas.height);
-    }
+        // Resize canvas initially and when window resizes
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();  // Set initial size
 
-    // Resize canvas initially and when window resizes
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();  // Set initial size
+        // Fullscreen change events
+        function onFullscreenChange() {
+            // If in fullscreen mode, resize canvas
+            if (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement) {
+                resizeCanvas();  // Resize canvas when entering fullscreen
+            }
+        }
 
-    // Listen for fullscreen changes and adjust canvas size
-    document.addEventListener('fullscreenchange', resizeCanvas);
-    document.addEventListener('webkitfullscreenchange', resizeCanvas); // For Safari
-    document.addEventListener('mozfullscreenchange', resizeCanvas); // For Firefox
-    document.addEventListener('msfullscreenchange', resizeCanvas); // For IE/Edge
+        // Listen for fullscreen change events (cross-browser support)
+        document.addEventListener('fullscreenchange', onFullscreenChange);
+        document.addEventListener('webkitfullscreenchange', onFullscreenChange); // For Safari
+        document.addEventListener('mozfullscreenchange', onFullscreenChange); // For Firefox
+        document.addEventListener('msfullscreenchange', onFullscreenChange); // For IE/Edge
+
+        // Manually trigger fullscreen (for testing purposes)
+        // Example to trigger fullscreen on a button or on an event (like clicking a button):
+        function goFullscreen() {
+            if (canvas.requestFullscreen) {
+                canvas.requestFullscreen();
+            } else if (canvas.webkitRequestFullscreen) { // Safari
+                canvas.webkitRequestFullscreen();
+            } else if (canvas.mozRequestFullScreen) { // Firefox
+                canvas.mozRequestFullScreen();
+            } else if (canvas.msRequestFullscreen) { // IE/Edge
+                canvas.msRequestFullscreen();
+            }
+        }
+
+        // Example: Trigger fullscreen on a button click (add a button to trigger fullscreen)
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'F11') {  // F11 key to trigger fullscreen for testing
+                goFullscreen();
+            }
+        });
+
     </script>
 
     <script>
-    var game = "/1v1-lol/";
+        var game = "/1v1-lol/";
     </script>
     <script src="../stenunblockedmain.js"></script>
     <script src="firebasestuff.js"></script>
